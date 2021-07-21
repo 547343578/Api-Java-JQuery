@@ -25,6 +25,10 @@ $(document).ready(() => {
                                 <button id='btn-delete' class="btn btn-danger">Eliminar</button>
                             </td>
 
+                            <td>
+                                <button id='btn-edit' class="btn btn-success">Editar</button>
+                            </td>
+
                         </tr>
                     `
                 });
@@ -95,8 +99,8 @@ $(document).ready(() => {
         $(document).on('click', '#btn-delete', function(){
 
             if(confirm('Seguro de eliminar ?')){
-                let btnDetails = $(this)[0].parentElement.parentElement; // this es el btn click 
-                let id = $(btnDetails).attr('alumnoId');
+                let btnDelete = $(this)[0].parentElement.parentElement; // this es el btn click 
+                let id = $(btnDelete).attr('alumnoId');
 
                 $.ajax({
                 url: 'http://localhost:8080/api/delete/' + id,
@@ -108,6 +112,66 @@ $(document).ready(() => {
                 }
             })
             }
+        })
+    }
+
+
+    // Rellenar los datos del alumno en el formulario
+    const rellenarAlumno = () => {
+        $(document).on('click', '#btn-edit', function(){
+            let btnEdit = $(this)[0].parentElement.parentElement; // this es el btn click 
+            let id = $(btnEdit).attr('alumnoId');
+            
+            $('#agregar').hide();
+            $('#editar').show();
+
+            $.ajax({
+                url:'http://localhost:8080/api/alumno/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: (res) => {
+                    $('#id').val(res.id);
+                    $('#nombre').val(res.nombre);
+                    $('#apellidos').val(res.apellidos);
+                    $('#curso').val(res.curso);
+                    $('#nota').val(res.nota);
+                }
+            })
+
+        })
+    }
+
+
+    // Metodo para modificar los datos de los alumnos
+    const editAlumno = () => {
+        $('#editar').on('click', function(){
+            let id = $('#id').val();
+            $('agregar').css('display', 'none');
+            $('editar').css('display', 'block');
+
+            const datosAlumno = {
+                nombre: $('#nombre').val(),
+                apellidos: $('#apellidos').val(),
+                curso: $('#curso').val(),
+                nota: $('#nota').val()
+            }
+
+            $.ajax({
+                url: 'http://localhost:8080/api/update/' + id,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(datosAlumno),
+                dataType: 'json',
+                success: (res) => {
+                    $('#messages').html('Alumno modificado').css('display', 'block');
+                    $('#editar').css('display', 'none');
+                    $('#agregar').css('display', 'block');
+
+                    reset();
+                    list();
+                }
+            })
+
         })
     }
    
@@ -125,4 +189,6 @@ $(document).ready(() => {
     save(); 
     details();
     deleteAlumno();
+    rellenarAlumno();
+    editAlumno();
 })
