@@ -21,6 +21,10 @@ $(document).ready(() => {
                                 <button id='btn-details' class="btn btn-warning">Detalles</button>
                             </td>
 
+                            <td>
+                                <button id='btn-delete' class="btn btn-danger">Eliminar</button>
+                            </td>
+
                         </tr>
                     `
                 });
@@ -85,6 +89,27 @@ $(document).ready(() => {
         })
     }
 
+
+    // Eliminar alumno
+    const deleteAlumno = () => {
+        $(document).on('click', '#btn-delete', function(){
+
+            if(confirm('Seguro de eliminar ?')){
+                let btnDetails = $(this)[0].parentElement.parentElement; // this es el btn click 
+                let id = $(btnDetails).attr('alumnoId');
+
+                $.ajax({
+                url: 'http://localhost:8080/api/delete/' + id,
+                type: 'DELETE',
+                dataType: 'json',
+                success: (res) => {
+                    $('#messages').html('Alumno eliminado').css('display', 'block');
+                    list();
+                }
+            })
+            }
+        })
+    }
    
 
     //Metodo para limpiar el formulario
@@ -99,4 +124,5 @@ $(document).ready(() => {
     list();
     save(); 
     details();
+    deleteAlumno();
 })

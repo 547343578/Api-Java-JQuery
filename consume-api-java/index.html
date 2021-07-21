@@ -15,14 +15,14 @@
         <span class="navbar-brand m-auto h1 text-white text-center p-4">CONSUMIR API DE JAVA CON AJAX Y JQUERY</span>
     </nav>
 
+    <!-- MENSAJES -->
+    <div id="messages" class="alert alert-success text-center" style="font-size:20px; display:none;"></div>
+
     <!-- DETALLES DE ALUMNOS -->
     <div class="row justify-content-center">
         <div id="alumno-details" class="text-center mt-5 p-2 col-md-4"></div>
     </div>
 
-
-    <!-- MENSAJES -->
-    <div id="messages" class="alert alert-success text-center" style="font-size:20px; display:none;"></div>
 
     <div class="container">
         <div class="row">
@@ -47,19 +47,19 @@
         <div class="col-4 ml-auto" style="margin-top: 50px">
             <div class="ml-5">
                 <div class="form-group">
-                    <input type="text" class="form-control font-italic" id="nombre" placeholder="Nombre"/>
+                    <input type="text" class="form-control font-italic" id="nombre" placeholder="Nombre" autocomplete="off"/>
                 </div>
 
                 <div class="form-group mt-2">
-                    <input type="text" class="form-control font-italic" id="apellidos" placeholder="Apellidos"/>
+                    <input type="text" class="form-control font-italic" id="apellidos" placeholder="Apellidos" autocomplete="off"/>
                 </div>
 
                 <div class="form-group mt-2">
-                    <input type="text" class="form-control font-italic" id="curso" placeholder="Curso"/>
+                    <input type="text" class="form-control font-italic" id="curso" placeholder="Curso" autocomplete="off"/>
                 </div>
 
                 <div class="form-group mt-2">
-                    <input type="text" class="form-control font-italic" id="nota" placeholder="Nota"/>
+                    <input type="text" class="form-control font-italic" id="nota" placeholder="Nota" autocomplete="off"/>
                 </div>
 
                 <input type="hidden" id="id"/>
