@@ -10,12 +10,17 @@ $(document).ready(() => {
                 let data = '';
                 res.forEach(element => {
                     data += `
-                        <tr>
+                        <tr alumnoId= ${element.id}>
                             <td>${element.id}</td>
                             <td>${element.nombre}</td>
                             <td>${element.apellidos}</td>
                             <td>${element.curso}</td>
                             <td>${element.nota}</td>
+
+                            <td>
+                                <button id='btn-details' class="btn btn-warning">Detalles</button>
+                            </td>
+
                         </tr>
                     `
                 });
@@ -51,6 +56,37 @@ $(document).ready(() => {
         })
     }
 
+    //Detalles del alumno
+    const details = () => {
+        $(document).on('click', '#btn-details', function(){
+            let btnDetails = $(this)[0].parentElement.parentElement; // this es el btn click 
+            let id = $(btnDetails).attr('alumnoId');
+
+            $.ajax({
+                url:'http://localhost:8080/api/alumno/' + id,
+                type:'GET',
+                dataType:'json',
+                success:(res) => {
+                    let data = `
+                        <strong>Nombre</strong> ${res.nombre} <br>
+                        <strong>Apellidos</strong> ${res.apellidos} <br>
+                        <strong>Curso</strong> ${res.curso} <br>
+                        <strong>Nota</strong> ${res.nota} <br>
+                        <button id="btn-limpiar" class="btn btn-warning">Limpiar</button>
+                    `
+                    let alumno = $('#alumno-details').html(data);
+                    $('#btn-limpiar').on('click', () => {
+                        alumno.html('');
+                    })
+
+                }
+            })
+
+        })
+    }
+
+   
+
     //Metodo para limpiar el formulario
     const reset = () => {
         $('#nombre').val('');
@@ -61,5 +97,6 @@ $(document).ready(() => {
 
     //Llamadas a funcion
     list();
-    save();
+    save(); 
+    details();
 })
